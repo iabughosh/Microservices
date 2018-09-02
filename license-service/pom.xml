@@ -12,7 +12,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <start-class>org.ibra.license.Application</start-class>
     <docker.image.name>ibra/license-service</docker.image.name>
     <docker.image.tag>latest</docker.image.tag>
@@ -39,13 +38,24 @@
 	<dependency>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-config-client</artifactId>
-		<version>2.0.1.RELEASE</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-rsa -->
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-rsa</artifactId>
-	    <version>1.0.7.RELEASE</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-eureka -->
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+	    </dependency>
+	<dependency>
+	    <groupId>com.netflix.hystrix</groupId>
+	    <artifactId>hystrix-javanica</artifactId>
 	</dependency>
   </dependencies>
 
@@ -77,5 +87,4 @@
       </plugin>
     </plugins>
 </build>
-
 </project>

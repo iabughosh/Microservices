@@ -1,0 +1,7 @@
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    waitTimeInMsWhenSyncEmpty: 5 
+    peer-node-read-timeout-ms: 1000

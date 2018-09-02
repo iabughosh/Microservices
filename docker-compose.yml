@@ -4,16 +4,37 @@ services:
     image: ibra/license-service:latest
     #build: ./license-service
     ports:
-    - "8080:8080"
+    - 8080:8080
     environment:
       PROFILE: dev
       CONFIGSERVER_URI: "http://confsrv:8888"
+      EUREKASERVER_URI: "http://eurekasrv:8761/eureka/"
       ENCRYPT_KEY: "mykey"
       JAVA_OPT: "-Xms256m -Xmx1g"
     depends_on:
       - "db"
       - "confsrv"
-    command: dockerize -wait http://confsrv:8888/actuator/health -timeout 60s -wait-retry-interval 15s /run.sh
+      - "eurekasrv"
+    command: "dockerize -wait http://confsrv:8888/actuator/health -wait-retry-interval 25s -timeout 180s \ 
+			                  -wait http://eurekasrv:8761/actuator/health -wait-retry-interval 15s -timeout 180s \
+                        /run.sh"
+  orgsrv:
+    image: ibra/org-service:latest
+    ports:
+    - 8080
+    environment:
+      PROFILE: dev
+      CONFIGSERVER_URI: "http://confsrv:8888"
+      EUREKASERVER_URI: "http://eurekasrv:8761/eureka/"
+      ENCRYPT_KEY: "mykey"
+      JAVA_OPT: "-Xms256m -Xmx1g"
+    depends_on:
+      - "db"
+      - "confsrv"
+      - "eurekasrv"
+    command: "dockerize -wait http://confsrv:8888/actuator/health -wait-retry-interval 15s -timeout 180s \ 
+			                  -wait http://eurekasrv:8761/actuator/health -wait-retry-interval 15s -timeout 180s \
+                        /run.sh"
   db:
     image: postgres:10
     ports:
@@ -24,6 +45,7 @@ services:
       POSTGRES_DB: "eagle_eye"
     volumes:
       - "/home/docker/Documents/config/postgres-data:/var/lib/postgresql/data:z"
+
   confsrv:
     image: ibra/conf-service:latest
     #build: ./confsrv
@@ -31,4 +53,10 @@ services:
       - "8888:8888"
     environment:
       ENCRYPT_KEY: "mykey"
-      JAVA_OPT: "-Xms256m -Xmx1g"
+      JAVA_OPT: "-Xms256m -Xmx756m"
+  eurekasrv:
+    image: ibra/eureka-service:latest
+    ports:
+    - "8761:8761"
+    environment:
+      JAVA_OPT: "-Xms256m -Xmx756m"

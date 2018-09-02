@@ -57,8 +57,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .title("Licenses Service API")
                 .description("\"Licesnses REST API Docs\"")
                 .version("1.0.0")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
+                .license("GNU General Public License v3.0")
+                .licenseUrl("https://github.com/iabughosh/microservices/blob/master/LICENSE")
                 .contact(new Contact("Smart worx", "https://github.com/iabughosh", "ibrahim_abu-ghosh@live.com"))
                 .build();
     }
