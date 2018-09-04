@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  licensesrv:
+    image: ibra/license-service:latest
+    #build: ./license-service
+    ports:
+    - "8080:8080"
+    environment:
+      PROFILE: dev
+      CONFIGSERVER_URI: "http://confsrv:8888"
+      ENCRYPT_KEY: "mykey"
+      JAVA_OPT: "-Xms256m -Xmx1g"
+    depends_on:
+      - "db"
+      - "confsrv"
+    command: dockerize -wait http://confsrv:8888/actuator/health -timeout 60s -wait-retry-interval 15s /run.sh
+  db:
+    image: postgres:10
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "microuser"
+      POSTGRES_PASSWORD: "micropass"
+      POSTGRES_DB: "eagle_eye"
+    volumes:
+      - "/home/docker/Documents/config/postgres-data:/var/lib/postgresql/data:z"
+  confsrv:
+    image: ibra/conf-service:latest
+    #build: ./confsrv
+    ports:
+      - "8888:8888"
+    environment:
+      ENCRYPT_KEY: "mykey"
+      JAVA_OPT: "-Xms256m -Xmx1g"

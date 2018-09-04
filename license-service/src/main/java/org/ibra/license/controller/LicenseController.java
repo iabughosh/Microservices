@@ -2,6 +2,7 @@ package org.ibra.license.controller;
 
 import java.util.List;
 
+import org.ibra.license.config.ServiceConfig;
 import org.ibra.license.model.License;
 import org.ibra.license.service.LicenseService;
 import org.slf4j.Logger;
@@ -22,6 +23,9 @@ public class LicenseController {
 	@Autowired
 	private LicenseService licenseService;
 	
+	@Autowired
+	private ServiceConfig serviceConfig;
+	
 	@RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
     public License getLicenses( @PathVariable("orgId") String organizationId,
                                 @PathVariable("licenseId") String licenseId) {
@@ -35,6 +39,8 @@ public class LicenseController {
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
 	public List<License> findLicensesByOrgId(@PathVariable("orgId") String orgId) {
+		
+		log.info("Checking profile config name {}", serviceConfig.getTracerProperty());
 		
 		return licenseService.findLicensesByOrgId(orgId);
 	}

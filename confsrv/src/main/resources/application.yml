@@ -7,4 +7,6 @@ spring:
      config:
        server:
            native:
-              searchLocations: file:///home/docker/Documents/config/licenseservice
+              searchLocations: classpath:config/,classpath:config/licenseservice
+              #File System
+              #searchLocations: file:///home/docker/Documents/config/licenseservice
