@@ -11,3 +11,8 @@ spring.datasource.password: "{cipher}cfa6c171c4b2a4943e80c67e3c586d1d91a7c604cba
 spring.datasource.testWhileIdle: "true"
 spring.datasource.validationQuery: "SELECT 1"
 spring.jpa.properties.hibernate.dialect: "org.hibernate.dialect.PostgreSQLDialect"
+
+hystrix:
+  command.getOrganization.execution.isolation.thread.timeoutInMilliseconds: 10000
+  threadpool.orgSrvClient.coreSize: 30
+  threadpool.orgSrvClient.maxQueueSize: 10

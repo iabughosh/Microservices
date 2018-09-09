@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "licenses")
@@ -25,6 +26,13 @@ public class License {
 	@Column(name="comment")
 	private String comment;
 	  
+	@Transient
+	private String orgName;
+	@Transient
+	private String orgPhone;
+	@Transient
+	private String orgMail;
+	
 	public String getId() {
 		return id;
 	}
@@ -100,6 +108,25 @@ public class License {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public String getOrgPhone() {
+		return orgPhone;
+	}
+
+	public String getOrgMail() {
+		return orgMail;
+	}
 	
-	
+	public License fillOrganizationInfo(Organization org) {
+		
+		this.orgName = org.getName();
+		this.orgMail = org.getContactEmail();
+		this.orgPhone = org.getContactPhone();
+		
+		return this;
+	}
 }

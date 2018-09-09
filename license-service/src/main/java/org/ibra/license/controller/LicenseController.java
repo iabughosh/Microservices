@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.ibra.license.config.ServiceConfig;
 import org.ibra.license.model.License;
+import org.ibra.license.model.Organization;
 import org.ibra.license.service.LicenseService;
+import org.ibra.license.service.client.OrganizationServiceClient;
+import org.ibra.license.utils.UserContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +29,23 @@ public class LicenseController {
 	@Autowired
 	private ServiceConfig serviceConfig;
 	
+	@Autowired
+	private OrganizationServiceClient orgServiceClient;
+	
 	@RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
     public License getLicenses( @PathVariable("orgId") String organizationId,
                                 @PathVariable("licenseId") String licenseId) {
-
+		
+		log.info("LicenseController Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
+		
+		Organization organization = orgServiceClient.getOrganization(organizationId);
+		
         return new License()
             .withId(licenseId)
             .withOrganizationId(organizationId)
             .withProductName("Teleco")
-            .withLicenseType("Seat");
+            .withLicenseType("Seat")
+            .fillOrganizationInfo(organization);
 	}
 	
 	@RequestMapping(value = "/find", method = RequestMethod.GET)

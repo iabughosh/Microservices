@@ -108,6 +108,7 @@ Project is consisted of main project (microservices) and it contain each service
 Microservices main project contains pom.xml which includes sub modules definition, common properties, dependencies and plugins.
 
 Common plugins in main projects are :
+
 1- <b>Maven Check style</b> : it is static code analysis for your java code sytles & indents, you can run it by navigate to your folder and execute the below maven target :
 
 ```
