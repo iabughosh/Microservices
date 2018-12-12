@@ -20,6 +20,7 @@
     <module>confsrv</module>
     <module>eurekasrv</module>
     <module>org-service</module>
+    <module>zuul</module>
   </modules>
   <dependencyManagement>
     <dependencies>

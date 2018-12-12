@@ -1,0 +1,4 @@
+hystrix.command.licenseservice.execution.isolation.thread.timeoutInMilliseconds: 2500
+hystrix.command.orgservice.execution.isolation.thread.timeoutInMilliseconds: 2500
+licenseservice.ribbon.ReadTimeout: 5000
+orgservice.ribbon.ReadTimeout: 5000

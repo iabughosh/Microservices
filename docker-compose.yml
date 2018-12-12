@@ -4,13 +4,13 @@ services:
     image: ibra/license-service:latest
     #build: ./license-service
     ports:
-    - 8080:8080
+    - 8081:8080
     environment:
       PROFILE: dev
       CONFIGSERVER_URI: "http://confsrv:8888"
       EUREKASERVER_URI: "http://eurekasrv:8761/eureka/"
       ENCRYPT_KEY: "mykey"
-      JAVA_OPT: "-Xms256m -Xmx1g"
+      JAVA_OPT: "-Xms64m -Xmx128m"
     depends_on:
       - "db"
       - "confsrv"
@@ -21,13 +21,13 @@ services:
   orgsrv:
     image: ibra/org-service:latest
     ports:
-    - 8080
+    - 8082:8080
     environment:
       PROFILE: dev
       CONFIGSERVER_URI: "http://confsrv:8888"
       EUREKASERVER_URI: "http://eurekasrv:8761/eureka/"
       ENCRYPT_KEY: "mykey"
-      JAVA_OPT: "-Xms256m -Xmx1g"
+      JAVA_OPT: "-Xms64m -Xmx128m"
     depends_on:
       - "db"
       - "confsrv"
@@ -53,10 +53,25 @@ services:
       - "8888:8888"
     environment:
       ENCRYPT_KEY: "mykey"
-      JAVA_OPT: "-Xms256m -Xmx756m"
+      JAVA_OPT: "-Xms64m -Xmx128m"
   eurekasrv:
     image: ibra/eureka-service:latest
     ports:
     - "8761:8761"
     environment:
-      JAVA_OPT: "-Xms256m -Xmx756m"
+      JAVA_OPT: "-Xms64m -Xmx128m"
+  zuul:
+    image: ibra/zuul:latest
+    ports:
+    - 5555:5555
+    environment:
+      PROFILE: dev
+      CONFIGSERVER_URI: "http://confsrv:8888"
+      CONFIG_PORT: 8888
+      EUREKASERVER_URI: "http://eurekasrv:8761/eureka/"
+      EUREKA_PORT: 8761
+      ENCRYPT_KEY: "mykey"
+      JAVA_OPT: "-Xms64m -Xmx128m"
+    depends_on:
+      - "confsrv"
+      - "eurekasrv"
